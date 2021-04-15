@@ -1,2 +1,9 @@
-### Eclipse ###
-application.properties
+# Java
+*.class
+
+# Eclipse
+src/main/resources/application.properties
+
+# Persistence
+/target/
+

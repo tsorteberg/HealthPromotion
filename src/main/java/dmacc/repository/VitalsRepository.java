@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import dmacc.beans.Vitals;
 
 @Repository
-public interface VitalsRepository extends JpaRepository<Vitals, Long>{
+public interface VitalsRepository extends JpaRepository<Vitals, Long> {
 
 }
