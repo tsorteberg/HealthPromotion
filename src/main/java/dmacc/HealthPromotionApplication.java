@@ -17,11 +17,10 @@ import dmacc.controller.BeanConfiguration;
 
 @SpringBootApplication
 public class HealthPromotionApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(HealthPromotionApplication.class, args);
 	}
 	
 	ApplicationContext appContext = new AnnotationConfigApplicationContext(BeanConfiguration.class);
-
 }

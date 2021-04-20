@@ -1,40 +1,16 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="ISO-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<title>View Vital</title>
+		<title>Health Promotion Test Page</title>
 	</head>
 	<body style="margin: 50px">
 		<div class="jumbotron">
-			<h1>View Vital</h1>
+			<h1>Health Promotion Test Page</h1>
 		</div>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th scope="col">Vital Id:</th>
-					<th scope="col">Date of Vital:</th>
-					<th scope="col">Body Mass Index:</th>
-					<th scope="col">Health Score:</th>
-					<th scope="col">Weight Category:</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${vital.userVitalId}" /></td>
-					<td th:text="${vital.dateTime}" /></td>
-					<td th:text="${score.bmi}" /></td>
-					<td th:text="${score.score}" /></td>
-					<td th:text="${score.category}" /></td>
-				</tr>
-			</tbody>
-		</table>
-		<p><strong>Blood Pressure:</strong></p>
-		<p th:utext="${score.bpMessage}"></p>
-		<p><strong>Diet and Exercise Recommendations:</strong></p>
-		<p th:utext="${score.weightMessage}"></p>
-
-		<a href="../" class="btn btn-primary" >Home:</a>
+		<a href="viewVitals/1" class="btn btn-primary">View Vitals</a><br />
 		
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
