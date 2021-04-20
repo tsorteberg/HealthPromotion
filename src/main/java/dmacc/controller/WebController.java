@@ -53,7 +53,7 @@ public class WebController {
 		String bpMessage2 = "Elevated. You should consider contacting a physician.";
 		String bpMessage3 = "Hypertension Stage 1: You should contact a physician.";
 		String bpMessage4 = "Hypertension Stage 2: You should contact a physician as soon as possible.";
-		String bpMessage5 = "Hypertension State 3: You should contact a physician immediately.";
+		String bpMessage5 = "Hypertension Stage 3: You should contact a physician immediately.";
 		
 		// Look up record in table by id and return Vital object type or null if not found.
 		Vitals v = vitalsRepo.findById(id).orElse(null);
