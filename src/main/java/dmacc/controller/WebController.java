@@ -76,7 +76,7 @@ public class WebController {
 			Score s = new Score();
 			
 			// Calculate BMI
-			bmi = weight / ((height * height) * 703);
+			bmi = (weight / height / height) * 703;
 			
 			// Assign BMI attribute to Score object
 			s.setBmi(bmi);
