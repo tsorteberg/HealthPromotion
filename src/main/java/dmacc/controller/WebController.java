@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import dmacc.beans.Score;
+import dmacc.beans.User;
 import dmacc.beans.Vitals;
+import dmacc.repository.UserRepository;
 import dmacc.repository.VitalsRepository;
 
 @Controller
@@ -23,6 +27,9 @@ public class WebController {
 	
 	@Autowired
 	VitalsRepository vitalsRepo;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	/**
 	 * Action method that retrieves a record from the uservitals table by id and passes and updated model to viewVitals.html.
@@ -74,4 +81,23 @@ public class WebController {
 	public String userHome(Model model) {
 		return "userHome";
 	}
+	
+	// ----------------------------
+	// --- Registration methods ---
+	// ----------------------------
+	@GetMapping("/registration")
+	public String register(Model model) {
+		User user = new User();
+		model.addAttribute("newUser", user);
+		return "userRegistration";
+		
+	}
+	
+	@PostMapping("/registration")
+	public String addUser(@ModelAttribute("user") User user, Model model) {
+		userRepo.save(user); 
+		return "sucessfulRegistration";
+	}
+	
+	
 }
