@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Input Vitals</title>
 </head>
 <body>
+	<H3>Add New Vital</H3>
+	<form th:object="${newVital}" th:action="@{/update/{id}(id=${newVital.id})}" method=POST>
+	
+		Age: <input name="age" size="10" th:field="*{age}"> <br />
+		Weight: <input name="weight" size="20" th:field="*{weight}"><br />
+		height: <input name="height" size="20" th:field="*{height}"><br />
+		Blood Pressure: <input name="bloodPressure" size="10" th:field="*{bloodPressure}"><br />
+		Date: <input name="date" size="20" th:field="*{date}"> <br />
+		<br/>
+		<input name="submit" type="submit" value="submit" />
+	</form>
 
 </body>
 </html>
