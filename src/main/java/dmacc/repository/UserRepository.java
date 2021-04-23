@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import dmacc.beans.User;
 
 @Repository
-public interface UserRepository{
+public interface UserRepository extends JpaRepository<User, Long>{
 	
 }
