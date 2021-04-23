@@ -4,27 +4,29 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<title>View Vital</title>
+		<script type="text/javascript" th:src="@{/js/gauge.js}"></script>
 	</head>
 	<body style="margin: 50px">
 		<div class="jumbotron">
-			<h1>View Vital</h1>
+			<h1>Health Score</h1>
+			<h3 th:text="${vital.dateTime}"></h3>
 		</div>
+		<h2>Your Health Score is: <span id="preview-textfield"></span></h2>
+		<div>
+            <canvas id="demo"></canvas>
+        </div>
+        <h1>Status: <span th:text="${score.healthStatus}"></span></h1>
+        
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th scope="col">Vital Id:</th>
-					<th scope="col">Date of Vital:</th>
 					<th scope="col">Body Mass Index:</th>
-					<th scope="col">Health Score:</th>
 					<th scope="col">Weight Category:</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${vital.userVitalId}" /></td>
-					<td th:text="${vital.dateTime}" /></td>
 					<td th:text="${score.bmi}" /></td>
-					<td th:text="${score.score}" /></td>
 					<td th:text="${score.category}" /></td>
 				</tr>
 			</tbody>
@@ -35,6 +37,63 @@
 		<p th:utext="${score.weightMessage}"></p>
 
 		<a href="../" class="btn btn-primary" >Home:</a>
+		
+		<div class="container">
+            <canvas id="demo"></canvas>
+        </div>
+        
+        <div id="preview-textfield"></div>
+        
+        <script th:inline="javascript">
+        	// Ignore error generated below.  It is known error caused by Thymeleaf and does
+        	// not prevent the applicaiton from running.
+        	let score = [[${score.score}]];
+            var opts = {
+                angle: -0.25,
+                    lineWidth: 0.2,
+                    radiusScale:0.9,
+                    pointer: {
+                        length: 0.6,
+                        strokeWidth: 0.05,
+                        color: '#000000'
+                    },
+                    staticLabels: {
+                        font: "10px sans-serif",
+                        labels: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                        fractionDigits: 0
+                    },
+                    staticZones: [
+                        {strokeStyle: "#F03E3E", min: 0, max: 33.3},
+                        {strokeStyle: "#FFDD00", min: 33.3, max: 66.6},
+                        {strokeStyle: "#30B32D", min: 66.6, max: 100}
+                    ],
+
+                    renderTicks: {
+                    divisions: 5,
+                    divWidth: 1.1,
+                    divLength: 0.7,
+                    divColor: "#333333",
+                    subDivisions: 3,
+                    subLength: 0.5,
+                    subWidth: 0.6,
+                    subColor: "#666666"
+                    },
+
+                    limitMax: false,
+                    limitMin: false,
+                    highDpiSupport: true
+                };
+
+            var target = document.getElementById('demo'); 
+            var gauge = new Gauge(target).setOptions(opts);
+            document.getElementById("preview-textfield").className = "preview-textfield";
+            gauge.setTextField(document.getElementById("preview-textfield"));
+            gauge.maxValue = 100;
+            gauge.setMinValue(0);
+            gauge.set(score);
+            gauge.animationSpeed = 32
+            
+        </script>
 		
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
