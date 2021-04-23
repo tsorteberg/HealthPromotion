@@ -82,6 +82,13 @@ public class WebController {
 		return "userHome";
 	}
 	
+	@GetMapping("/userSignIn")
+	public String userSignIn(@PathVariable("userId") long userId, Model model) {
+		User u = userRepo.findById(userId).orElse(null);
+		model.addAttribute(u);
+		return "userHome";
+	}
+	
 	// ----------------------------
 	// --- Registration methods ---
 	// ----------------------------
