@@ -32,25 +32,22 @@ import lombok.NoArgsConstructor;
  
 public class User {
 	
-	/**
-	 * To do: Revise relationship with Vitals.java
-	 */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId")
 	private long userId;
 	
-	@Column(name = "name")
+	@Column(name = "name",nullable = false)
 	private String name;
 	
-	@Column(name = "email")
+	@Column(name = "email",nullable = false)
 	private String email;
 	
-	@Column(name = "userName")
+	@Column(name = "userName",nullable = false)
 	private String userName;
 	
-	@Column(name = "password")
+	@Column(name = "password",nullable = false)
 	private String password;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
