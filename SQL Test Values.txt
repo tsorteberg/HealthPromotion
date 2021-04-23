@@ -1,3 +1,6 @@
 INSERT INTO user VALUES (1, "John Smith", "jsmith@email.com", "jsmith", "password123");
 INSERT INTO uservitals VALUES (1, '37', '80', '119', '2021-04-19', '72', 1, '225'); 
-INSERT INTO uservitals VALUES (2, '37', '84', '121', '2021-04-20', '72', 1, '220'); 
+INSERT INTO uservitals VALUES (2, '37', '84', '121', '2021-04-20', '72', 1, '220');
+INSERT INTO uservitals VALUES (3, '37', '79', '117', '2021-04-21', '72', 1, '180');
+INSERT INTO uservitals VALUES (4, '37', '121', '181', '2021-04-22', '72', 1, '225');
+INSERT INTO uservitals VALUES (5, '37', '85', '125', '2021-04-21', '72', 1, '100');
