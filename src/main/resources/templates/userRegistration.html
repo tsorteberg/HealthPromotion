@@ -8,13 +8,78 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
+    <script>
+    'use strict'
+
+    function checkCredentials(form){
+        /*
+          code below will be separated into another file
+          and remodeled on the final stage of the client-side validation.
+        */ 
+
+        // const form = document.getElementById("form1");
+        // const nameOfUser = document.getElementById("name");
+        // const userName = document.getElementById("username");
+        // const emailAddress = document.getElementById("email");
+        // const password = document.getElementById("password");
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+        //trimming to eliminate white space of user input
+        // const nameValue = nameOfUser.value.trim();
+        // const userNameValue = userName.value.trim();
+        // const emailValue = emailAddress.value.trim();
+        // const passwordValue = password.value.trim();
+
+        if(form.name.value == ""){
+            alert('name cannot be left blank');
+            form.name.focus();
+            return false;
+            
+        }
+
+        if(form.username.value == ""){
+            alert('username cannot be left blank');
+            form.username.focus();
+            return false;
+        }
+
+        if(form.email.value == ""){
+            alert('email cannot be left blank');
+            form.email.focus();
+            return false;
+        }
+
+        if(form.password.value == ""){
+            alert('password cannot be left blank');
+            form.password.focus();
+            return false;
+        }else if(form.password.value.length < 8){
+            alert('password is too short');
+            form.password.focus();
+            return false;
+        }
+
+        if(form.email.value.match(emailPattern)){
+            return true;
+        }else{
+            alert('Invalid email');
+            form.email.focus();
+            return false;
+        }
+
+    }
+
+    /* Function to be implemented for better warning messages
+        on final stage of client-side validation.
+    */
+    function setCredentialErrorMessage(input, message){
+    
+    }
+
+
+    </script>
     <div class ="col-md-4 col-md-offset-4">
-        <!-- 
-            To-Do...
-            1. Remove (onsubmit="event.preventDefault();") once other required pages are ready
-            2. Add action attribute
-        -->
-        <form id= "form1" th:action="@{/registration}" th:object="${newUser}" method="POST">
+        <form id= "form1" th:action="@{/registration}" th:object="${newUser}" method="POST" onsubmit="return checkCredentials(this)">
             <h1>Sign Up</h1>
 
             <div class="form-group">
@@ -52,5 +117,6 @@
         
         <p>Already have an account? <a href="index.html">Sign-In</a></p>
     </div>
+    
 </body>
 </html>
