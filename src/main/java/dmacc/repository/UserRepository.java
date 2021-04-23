@@ -8,5 +8,5 @@ import dmacc.beans.Vitals;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-
+	
 }
