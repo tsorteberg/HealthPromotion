@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>User Homepage</title>
 </head>
 <body>
-
+		<h3>Homepage</h3>
+	<form>
+    <table>
+        <tr>
+            <th class="id">Id</th>
+            <th class="height">Height</th>
+            <th class="weight">Weight</th>
+            <th class="bloodPressureSystolic">Blood Pressure Systolic</th>
+            <th class="bloodPressureDiastolic">Blood Pressure Diastolic</th>
+            <th class="dateTime">Date</th>
+            <th class="action" th:colspan="2">Action</th>
+        </tr>
+        <tr th:each="vital : ${vitals}">
+            <th th:class="id"     th:text="${vital.id}"></th>
+            <th th:class="height"   th:text="${vital.height}"></th>
+            <th th:class="weight" th:text="${vital.weight}"></th>
+            <th th:class="bloodPressureSystolic"   th:text="${vital.bloodPressureSystolic}"></th>
+            <th th:class="bloodPressureDiastolic"   th:text="${vital.bloodPressureDiastolic}"></th>
+            <th th:class="dateTime" th:text="${vital.dateTime}"></th>
+            <th th:class="action"><a th:href="@{/edit/{id}(id=${vital.id})}">Edit</a></th>
+            <th th:class="action"><a th:href="@{/delete/{id}(id=${vital.id})}">Delete</a></th>
+        </tr>
+    </table>
+</form>
+<br/>
+<a href="../addVitals">Add a new vital</a>
+<a href="../viewVitals">View vitals</a>
 </body>
 </html>

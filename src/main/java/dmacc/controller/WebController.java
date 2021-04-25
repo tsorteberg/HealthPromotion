@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 import dmacc.beans.Score;
 import dmacc.beans.Vitals;
 import dmacc.repository.VitalsRepository;
@@ -140,6 +141,15 @@ public class WebController {
 		
 	}
 	
+	 @GetMapping({"/", "/viewAllVitals"})
+	   public String viewAllVitals( Model model) {
+	       if (vitalsRepo.findAll().isEmpty()) {
+	           return addVitals(model);
+	       }
+	       model.addAttribute("vitals", vitalsRepo.findAll());
+	       return "userHome";
+	   }
+	
 	@GetMapping("/addVitals")
 	public String addVitals(Model model) {
 		Vitals v = new Vitals();
@@ -152,4 +162,23 @@ public class WebController {
 	public String userHome(Model model) {
 		return "userHome";
 	}
+	@GetMapping("/edit/{id}")
+    public String showUpdateVital( @PathVariable("id") long id, Model model) {
+        Vitals v = vitalsRepo.findById(id).orElse(null);
+        model.addAttribute("newVital", v);
+        return "addVitals";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateVitals(Vitals v, Model model) {
+        vitalsRepo.save(v);
+        return viewAllVitals(model);
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteVitals(@PathVariable("id") long id, Model model) {
+        vitalsRepo.findById(id).ifPresent(vitalsRepo :: delete);
+        return viewAllVitals(model);
+    }
+	
 }
