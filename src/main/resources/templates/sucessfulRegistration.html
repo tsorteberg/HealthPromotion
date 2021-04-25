@@ -19,7 +19,7 @@
     	--- remove comments to see user credentials on page
      <form>
         <table class="table">
-            <tr th:each="currentUser: ${user}">
+            <tr th:each="currentUser: ${newUser}">
                 <td th:text="${currentUser.userId}"></td>
                 <td th:text="${currentUser.name}"></td>
                 <td th:text="${currentUser.email}"></td>
