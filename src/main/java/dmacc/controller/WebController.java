@@ -76,9 +76,10 @@ public class WebController {
 	@GetMapping("/addVitals")
 	public String addVitals(Model model) {
 		Vitals v = new Vitals();
-		model.addAttribute("field", v);
-		return "userHome";
+		model.addAttribute("newVital", v);
+		return "addVitals";
 	}
+	
 	
 	@GetMapping("/userHome")
 	public String userHome(Model model) {
