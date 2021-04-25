@@ -10,25 +10,9 @@
 <body>
     <script>
     'use strict'
-
     function checkCredentials(form){
-        /*
-          code below will be separated into another file
-          and remodeled on the final stage of the client-side validation.
-        */ 
-
-        // const form = document.getElementById("form1");
-        // const nameOfUser = document.getElementById("name");
-        // const userName = document.getElementById("username");
-        // const emailAddress = document.getElementById("email");
-        // const password = document.getElementById("password");
+        
         const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-
-        //trimming to eliminate white space of user input
-        // const nameValue = nameOfUser.value.trim();
-        // const userNameValue = userName.value.trim();
-        // const emailValue = emailAddress.value.trim();
-        // const passwordValue = password.value.trim();
 
         if(form.name.value == ""){
             alert('name cannot be left blank');
@@ -53,12 +37,8 @@
             alert('password cannot be left blank');
             form.password.focus();
             return false;
-        }else if(form.password.value.length < 8){
-            alert('password is too short');
-            form.password.focus();
-            return false;
         }
-
+        
         if(form.email.value.match(emailPattern)){
             return true;
         }else{
@@ -68,39 +48,43 @@
         }
 
     }
-
-    /* Function to be implemented for better warning messages
-        on final stage of client-side validation.
-    */
-    function setCredentialErrorMessage(input, message){
-    
-    }
-
-
     </script>
     <div class ="col-md-4 col-md-offset-4">
-        <form id= "form1" th:action="@{/registration}" th:object="${newUser}" method="POST" onsubmit="return checkCredentials(this)">
+        <form id= "userRegistration" name="userRegistration" th:action="@{/registration}" th:object="${newUser}" method="POST"  onsubmit="return checkCredentials(this)">
             <h1>Sign Up</h1>
 
             <div class="form-group">
-                <label for="name">Name</label>
-                <input class="form-control" id="name" name="name" type="text" th:field="*{name}" placeholder="first and last name">
+                
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" name="name" type="text" th:field="*{name}"placeholder="first and last name">
+                	<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+                
             </div>
 
            <div class="form-group">
+            
                 <label for="username">Username</label>
                 <input class="form-control" id="username" name="username" th:field="*{userName}" type="text">
+                <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">User name Error</p>
+            	
            </div>
 
             <div class="form-group">
+                
                 <label for="email">Email Address</label>
                 <input class="form-control" id="email" name="email" type="text" th:field="*{email}">
                 <small id="emailHelp" class="form-text text-muted">Your email will not be shared with anyone else</small>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+                
+                
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" id="password" name="password" th:field="*{password}" type="text">
+                
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" name="password" th:field="*{password}" type="password">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                	
             </div>
 
 			<!-- will re-add after validation 
