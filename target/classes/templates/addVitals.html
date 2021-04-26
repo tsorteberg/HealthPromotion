@@ -6,6 +6,10 @@
 </head>
 <body>
 	<H3>Add New Vital</H3>
+	<!-- 
+		Form element that works with alternate controllers.
+		<form th:object="${newVital}" th:action="@{/postAddVital/{id}(id=${newVital.userId})}" method="POST">
+	 -->
 	<form th:object="${newVital}" th:action="@{/update/{id}(id=${newVital.id})}" method=POST>
 	
 		Age: <input name="age" size="10" th:field="*{age}"> <br />

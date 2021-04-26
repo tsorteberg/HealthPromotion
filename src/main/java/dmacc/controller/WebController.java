@@ -70,7 +70,6 @@ public class WebController {
 			// Return statement.
 			return "viewVitals";
 		}
-		
 	}
 	
 	@GetMapping({"/viewAllVitals"})
@@ -81,7 +80,7 @@ public class WebController {
 	    model.addAttribute("vitals", vitalsRepo.findAll());
 	        return "userHome";
 	   }
-	
+
 	@GetMapping("/addVitals")
 	public String addVitals(Model model) {
 		Vitals v = new Vitals();
@@ -99,7 +98,7 @@ public class WebController {
         model.addAttribute("newVital", v);
         return "addVitals";
     }
-
+	
     @PostMapping("/update/{id}")
     public String updateVitals(Vitals v, Model model) {
         vitalsRepo.save(v);
@@ -138,5 +137,48 @@ public class WebController {
  		userRepo.save(user); 
  		return "sucessfulRegistration";		
  	}
+ 	
+ 	/**
+	 * Example controllers that works with current project structure.
+	 * Simply pass user id from database into url.
+	@GetMapping({"/viewAllVitals/{id}"})
+	public String viewAllVitals(@PathVariable("id") long id, Model model) {
+		User u = userRepo.findById(id).orElse(null);
+		model.addAttribute("user", u);
+		return "userHome";
+	}
+	
+	@GetMapping("/addVitals/{id}")
+	public String addVitals(@ModelAttribute("user") User u, @PathVariable("id") long id, Model model) {
+		User user = userRepo.findById(id).orElse(null);
+		Vitals v = new Vitals();
+		
+		// Ensure user id is set on Vitals object.
+		if (u.getUserId() == 0) {
+			v.setUserId(user.getUserId());
+		}
+		else if (user.getUserId() == 0) {
+			v.setUserId(u.getUserId());
+		}
+		model.addAttribute("newVital", v);
+		return "addVitals";
+	}
+	
+	@PostMapping("/postAddVital/{id}")
+    public String postAddVitals(@ModelAttribute("newVital") Vitals vital, @PathVariable("id") Long id, Model model) {
+    	User user = userRepo.findById(id).orElse(null);
+    	user.getVitals().add(vital);
+        userRepo.save(user);
+        //return viewAllVitals(user.getUserId(), model);
+        return "redirect:../viewAllVitals" + "/" + id;
+    }
+    
+    @GetMapping("/delete/{uid}/{vid}")
+    public String deleteVitals(@PathVariable("uid") long uid, @PathVariable("vid") long vid, Model model) {
+        vitalsRepo.findById(vid).ifPresent(vitalsRepo :: delete);
+        //return viewAllVitals(uid, model);
+        return "redirect:../../viewAllVitals" + "/" + uid;
+    }
+    */
 	
 }
