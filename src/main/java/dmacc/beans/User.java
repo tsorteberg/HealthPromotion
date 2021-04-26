@@ -17,6 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,15 +41,22 @@ public class User {
 	@Column(name = "userId")
 	private long userId;
 	
+	
 	@Column(name = "name",nullable = false)
+	@NotEmpty @NotBlank(message="Whitespaces are not allowed")
+	@Size(min = 2, max = 25, message ="Full name has to be between 2 to 25 characters")
 	private String name;
 	
+//	@Email(regexp ="/^[^ ]+@[^ ]+\\.[a-z]{2,3}$/")
 	@Column(name = "email",nullable = false)
+	@NotEmpty
 	private String email;
 	
+	@NotEmpty @NotBlank(message="Whitespaces are not allowed")
 	@Column(name = "userName",nullable = false)
 	private String userName;
 	
+	@NotEmpty @NotBlank(message="Whitespaces are not allowed")
 	@Column(name = "password",nullable = false)
 	private String password;
 	
@@ -68,9 +78,10 @@ public class User {
 		this.password = password;
 	}
 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+	// make sure Lombok is imported @NoArgsConstructor already generates this piece of code
+//	public User() {
+//		// TODO Auto-generated constructor stub
+//	}
 	
 	
 	

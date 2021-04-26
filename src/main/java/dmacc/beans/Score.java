@@ -150,7 +150,7 @@ public class Score {
 		double h = Double.parseDouble(height);
 		
 		// Calculate BMI
-		this.bmi = (w / h / h) * 703;
+		this.bmi = Math.round(((w / h / h) * 703) * 10.0) / 10.0;
 	}
 	
 	/**
@@ -211,7 +211,7 @@ public class Score {
 		final String bpMessage2 = "Elevated. You should consider contacting a physician.";
 		final String bpMessage3 = "Hypertension Stage 1: You should contact a physician.";
 		final String bpMessage4 = "Hypertension Stage 2: You should contact a physician as soon as possible.";
-		final String bpMessage5 = "Hypertension State 3: You should contact a physician immediately.";
+		final String bpMessage5 = "Hypertensive Crisis: You should contact a physician immediately.";
 		
 		// Attempt to parse record data to type double to local variable.
 		// To Do: Try catch statement implementation.
