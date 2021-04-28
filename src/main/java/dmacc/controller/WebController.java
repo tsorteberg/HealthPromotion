@@ -8,17 +8,21 @@
  */
 package dmacc.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 
 import dmacc.beans.Score;
 import dmacc.beans.User;
@@ -33,6 +37,16 @@ public class WebController {
 	
 	@Autowired
 	UserRepository userRepo;
+	
+	/**
+	 * Method to trim spaces of form entries
+	 * @param dataBinder
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor strTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class,strTrimmerEditor);
+	}
 	
 	/**
 	 * Action method that retrieves a record from the uservitals table by id and passes and updated model to viewVitals.html.
@@ -131,11 +145,18 @@ public class WebController {
  	
  	@PostMapping("/registration")
  	public String addUser(@Valid @ModelAttribute("newUser") User user,BindingResult bindingResult, Model model ) {
+ 		
  		if(bindingResult.hasErrors()) {
  			return "userRegistration";
  		}
- 		userRepo.save(user); 
- 		return "sucessfulRegistration";		
+ 		try {
+ 			userRepo.save(user); 
+ 		}catch(Exception e) {
+ 			if(e.getCause()!= null && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
+ 				return "duplicateEntries";
+ 			}
+ 		}
+ 		return "sucessfulRegistration";	
  	}
  	
  	/**
