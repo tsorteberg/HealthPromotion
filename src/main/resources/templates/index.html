@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,9 +13,22 @@
 				alert('Must enter username and password')
 				return false;
 			}
-			
-			
 		}
+		
+		let userFound = [[${login.isUsernameFound()}]];
+		let passFound = [[${login.isPasswordFound()}]];
+		console.log(userFound);
+		console.log(passFound);
+		
+		function serverValidate(userFound, passFound) {
+			if (userFound == false) {
+				document.getElementById("userValid").innerHTML = "Registered user with provided username not found.";
+			}
+			if (passFound == false) {
+				document.getElementById("passValid").innerHTML = "Registered user with provided password not found.";
+			}
+		}	
+		
 	</script>
 	
 </head>
@@ -29,28 +42,30 @@
 	
 	<div class = "col-md-4 col-md-offset-4">
 		
-		<form method = "POST" name = "userLogin" th:action="@{/userSignIn}" onsubmit="return validate(this)">
+		<form method = "POST" name = "userLogin" th:action="@{/userSignIn}" th:object="${login}" onsubmit="return validate(this)">
 			<h1 style="text-align: center;"><u>Health Promotion Central</u><br><br></h1>
 			<h1>Sign In</h1>
 		
 			
 			<div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" id="username" name="username" type="text" placeholder="Registered username or email">
+                <input class="form-control" id="username" name="username" type="text" th:field="*{username}" placeholder="Registered username or email">
+                <p id="userValid" style="color:red;"></p>
             </div>
 
            <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" id="password" name="password" type="password">
+                <input class="form-control" id="password" name="password" type="password" th:field="*{password}">
+                <p id="passValid" style="color:red;"></p>
            </div>
            
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit" style="max-width: 200px; margin:0 auto;">Sign In</button>
             </div>
-	
+			<script>serverValidate(userFound, passFound);</script>
 		</form>
 		
-		<p style="text-align:center;">Don't have an account? <a href = "userRegistration.html">Register New Account!</a></p>
+		<p style="text-align:center;">Don't have an account? <a href = "registration">Register New Account!</a></p>
 	</div>
 </body>
 </html>

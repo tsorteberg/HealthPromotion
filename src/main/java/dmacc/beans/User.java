@@ -35,7 +35,6 @@ import lombok.NoArgsConstructor;
  
 public class User {
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId")
@@ -77,43 +76,63 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 	}
-
-// ---- check for Lombok annotations @Data generates getters and setters https://projectlombok.org/features/Data ----
+	
+	/**
+	 * Get method for userName instance.
+	 * Necessary for mapping to work with login process.
+	 * @return: String.
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	
+	/**
+	 * Set method for userName instance.
+	 * Necessary for mapping to work with login process.
+	 * @param userName: Required string.
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	/**
+	 * Get method for password instance.
+	 * @return: String.
+	 * Necessary for mapping to work with login process.
+	 */
+	public String getPassword() {
+		return password;
+	}
+	
+	/**
+	 * Set method for password instance.
+	 * Necessary for mapping to work with login process.
+	 * @param password: Required string.
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/**
+	 * Get method for email instance.
+	 * Necessary for mapping to work with login process.
+	 * @return: String.
+	 */
+	public String getEmail() {
+		return email;
+	}
+	
+	/**
+	 * Set method for email instance.
+	 * Necessary for mapping to work with login process.
+	 * @param email: Required string.
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+// make sure Lombok is imported @NoArgsConstructor already generates this piece of code
 //	public User() {
 //		// TODO Auto-generated constructor stub
 //	}
-//
-//	public String getUserName() {
-//		return userName;
-//	}
-//
-//	public void setUserName(String userName) {
-//		this.userName = userName;
-//	}
-//
-//	public String getPassword() {
-//		return password;
-//	}
-//
-//	public void setPassword(String password) {
-//		this.password = password;
-//	}
-//
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
-
-	
-	// make sure Lombok is imported @NoArgsConstructor already generates this piece of code
-//	public User() {
-//		// TODO Auto-generated constructor stub
-//	}
-	
-	
-	
-
 }
