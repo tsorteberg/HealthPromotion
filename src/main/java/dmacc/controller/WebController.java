@@ -11,7 +11,6 @@ package dmacc.controller;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,111 +62,55 @@ public class WebController {
 		// Look up record in table by id and return Vital object type or null if not found.
 		Vitals v = vitalsRepo.findById(id).orElse(null);
 		
-		// Selection logic to determine if the record is found.
-		// If record is not found.
-		if (v == null) {
-			return userHome(model);
-		}
-		// If record is found.
-		else {
-
-			// Instantiate Score object.
-			Score s = new Score();
+		// Instantiate Score object.
+		Score s = new Score();
 			
-			// Populate Score Object.
-			s.renderWeightInfo(v.getWeight(), v.getHeight());
-			s.renderBPInfo(v.getBloodPressureSystolic(), v.getBloodPressureDiastolic());
-			s.renderFinalScore();
-			s.renderHealthStatus();
+		// Populate Score Object.
+		s.renderWeightInfo(v.getWeight(), v.getHeight());
+		s.renderBPInfo(v.getBloodPressureSystolic(), v.getBloodPressureDiastolic());
+		s.renderFinalScore();
+		s.renderHealthStatus();
 
-			// Assign model attributes.
-			model.addAttribute("vital", v);
-			model.addAttribute("score", s);
+		// Assign model attributes.
+		model.addAttribute("vital", v);
+		model.addAttribute("score", s);
 			
-			// Return statement.
-			return "viewVitals";
-		}
+		// Return statement.
+		return "viewVitals";
 	}
-	
-	@GetMapping({"/viewAllVitals"})
-	public String viewAllVitals(Model model) {
-		if (vitalsRepo.findAll().isEmpty()) {
-			return addVitals(model);
-	    }
-	    model.addAttribute("vitals", vitalsRepo.findAll());
-	        return "userHome";
-	   }
-
-	@GetMapping("/addVitals")
-	public String addVitals(Model model) {
-		Vitals v = new Vitals();
-		model.addAttribute("newVital", v);
-		return "addVitals";
-	}
-	
-	@GetMapping("/userHome")
-	public String userHome(Model model) {
-		return "userHome";
-	}
-	@GetMapping("/edit/{id}")
-    public String showUpdateVital( @PathVariable("id") long id, Model model) {
-        Vitals v = vitalsRepo.findById(id).orElse(null);
-        model.addAttribute("newVital", v);
-        return "addVitals";
-    }
-	
-    @PostMapping("/update/{id}")
-    public String updateVitals(Vitals v, Model model) {
-        vitalsRepo.save(v);
-        return viewAllVitals(model);
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteVitals(@PathVariable("id") long id, Model model) {
-        vitalsRepo.findById(id).ifPresent(vitalsRepo :: delete);
-        return viewAllVitals(model);
-    }
     
-    @GetMapping("/userSignIn")
-	public String userSignIn(Model model, @PathVariable("username") String username, @PathVariable("password") String password) {
-		LogIn login = new LogIn(username, password);
+    @GetMapping({"/","/userSignIn"})
+	public String userSignIn(Model model) {
+		LogIn login = new LogIn();
 		model.addAttribute("login", login);
 		return "index";
 	}
     
     @PostMapping("/userSignIn")
-    public String validateUserSignIn(LogIn login) {
+    public String validateUserSignIn(@ModelAttribute("login") LogIn login, Model model) {
     	List<User> allUsers = (userRepo.findAll());
+    	long uid = 0;
+    	login.setUsernameFound(false);
+    	login.setPasswordFound(false);
     	
     	for(User user : allUsers) {
     		if(login.getUsername().equalsIgnoreCase(user.getUserName()) || login.getUsername().equalsIgnoreCase(user.getEmail())) {
     			login.setUsernameFound(true);
-    		} else {
-    			login.setUsernameFound(false);
-    		}
-    		
-    		if(login.getPassword().equals(user.getPassword())) {
-    			login.setPasswordFound(true);
-    		}else {
-    			login.setPasswordFound(false);
+    			uid = user.getUserId();
+    			if(login.getPassword().equals(user.getPassword())) {
+        			login.setPasswordFound(true);
+        		}
     		}
     	}
     	
-    	if(!(login.isUsernameFound() && login.isPasswordFound())) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided username and password not found.");
-    		return "index";
-    	} else if((!login.isUsernameFound()) && login.isPasswordFound()) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided username not found.");
-    		return "index";
-    	} else if(login.isUsernameFound() && (!login.isPasswordFound())) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided password not found.");
+    	if(login.isUsernameFound() && login.isPasswordFound()) {
+    		return "redirect:/viewAllVitals" + "/" + uid;
+    	}
+    	else {
+    		model.addAttribute("login", login);
     		return "index";
     	}
-   
-    	JOptionPane.showMessageDialog(null, "Successful Sign-In!");
-    	return "userHome";
     }
-    
     
     // ----------------------------
  	// --- Registration methods ---
@@ -199,6 +142,7 @@ public class WebController {
  	/**
 	 * Example controllers that works with current project structure.
 	 * Simply pass user id from database into url.
+	*/
 	@GetMapping({"/viewAllVitals/{id}"})
 	public String viewAllVitals(@PathVariable("id") long id, Model model) {
 		User u = userRepo.findById(id).orElse(null);
@@ -237,6 +181,4 @@ public class WebController {
         //return viewAllVitals(uid, model);
         return "redirect:../../viewAllVitals" + "/" + uid;
     }
-    */
-	
 }

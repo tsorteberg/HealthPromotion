@@ -64,6 +64,11 @@ public class User {
     @JoinColumn(name = "userId")
     private List<Vitals> vitals;
 
+	//public User() {
+		// TODO Auto-generated constructor stub
+		//super();
+	//}
+	
 	/**
 	 * @param name required string full name of user
 	 * @param email required string email address of user 
@@ -76,10 +81,6 @@ public class User {
 		this.email = email;
 		this.userName = userName;
 		this.password = password;
-	}
-
-	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getUserName() {
@@ -112,7 +113,4 @@ public class User {
 //		// TODO Auto-generated constructor stub
 //	}
 	
-	
-	
-
 }

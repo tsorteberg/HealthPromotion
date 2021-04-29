@@ -7,11 +7,18 @@ public class LogIn {
 	private boolean passwordFound;
 	
 	
-	public LogIn() {}
+	public LogIn() {
+		super();
+		this.usernameFound = true;
+		this.passwordFound = true;
+	}
 	
 	public LogIn(String username, String password) {
+		super();
 		this.username = username;
 		this.password = password;
+		this.usernameFound = true;
+		this.passwordFound = true;
 	}
 
 	public String getUsername() {
