@@ -89,6 +89,39 @@ public class WebController {
 		}
 	}
 	
+	@GetMapping({"/","/userSignIn"})
+	public String userSignIn(Model model) {
+		LogIn login = new LogIn();
+		model.addAttribute("login", login);
+		return "index";
+	}
+    
+    @PostMapping("/userSignIn")
+    public String validateUserSignIn(@ModelAttribute("login") LogIn login, Model model) {
+    	List<User> allUsers = (userRepo.findAll());
+    	long uid = 0;
+    	login.setUsernameFound(false);
+    	login.setPasswordFound(false);
+    	
+    	for(User user : allUsers) {
+    		if(login.getUsername().equalsIgnoreCase(user.getUserName()) || login.getUsername().equalsIgnoreCase(user.getEmail())) {
+    			login.setUsernameFound(true);
+    			uid = user.getUserId();
+    			if(login.getPassword().equals(user.getPassword())) {
+        			login.setPasswordFound(true);
+        		}
+    		}
+    	}
+    	
+    	if(login.isUsernameFound() && login.isPasswordFound()) {
+    		return "redirect:/viewAllVitals" + "/" + uid;
+    	}
+    	else {
+    		model.addAttribute("login", login);
+    		return "index";
+    	}
+    }
+	
 	@GetMapping({"/viewAllVitals"})
 	public String viewAllVitals(Model model) {
 		if (vitalsRepo.findAll().isEmpty()) {
@@ -127,47 +160,6 @@ public class WebController {
         vitalsRepo.findById(id).ifPresent(vitalsRepo :: delete);
         return viewAllVitals(model);
     }
-    
-    @GetMapping("/userSignIn")
-	public String userSignIn(Model model, @PathVariable("username") String username, @PathVariable("password") String password) {
-		LogIn login = new LogIn(username, password);
-		model.addAttribute("login", login);
-		return "index";
-	}
-    
-    @PostMapping("/userSignIn")
-    public String validateUserSignIn(LogIn login) {
-    	List<User> allUsers = (userRepo.findAll());
-    	
-    	for(User user : allUsers) {
-    		if(login.getUsername().equalsIgnoreCase(user.getUserName()) || login.getUsername().equalsIgnoreCase(user.getEmail())) {
-    			login.setUsernameFound(true);
-    		} else {
-    			login.setUsernameFound(false);
-    		}
-    		
-    		if(login.getPassword().equals(user.getPassword())) {
-    			login.setPasswordFound(true);
-    		}else {
-    			login.setPasswordFound(false);
-    		}
-    	}
-    	
-    	if(!(login.isUsernameFound() && login.isPasswordFound())) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided username and password not found.");
-    		return "index";
-    	} else if((!login.isUsernameFound()) && login.isPasswordFound()) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided username not found.");
-    		return "index";
-    	} else if(login.isUsernameFound() && (!login.isPasswordFound())) {
-    		JOptionPane.showMessageDialog(null, "Registered user with provided password not found.");
-    		return "index";
-    	}
-   
-    	JOptionPane.showMessageDialog(null, "Successful Sign-In!");
-    	return "userHome";
-    }
-    
     
     // ----------------------------
  	// --- Registration methods ---
