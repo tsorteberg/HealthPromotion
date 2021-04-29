@@ -49,8 +49,7 @@
 			<p><strong>Diet and Exercise Recommendations:</strong></p>
 			<p th:utext="${score.weightMessage}"></p>
 	
-			<a href="../" class="btn btn-secondary" >Back:</a>
-			<!-- <a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back:</a> -->
+			<a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back to Vitals:</a>
 			</div>
 	        
 	        <div id="preview-textfield"></div>
