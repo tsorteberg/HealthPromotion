@@ -9,7 +9,9 @@
 package dmacc.controller;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import dmacc.beans.LogIn;
 import dmacc.beans.Score;
 import dmacc.beans.User;
 import dmacc.beans.Vitals;
@@ -126,11 +129,45 @@ public class WebController {
     }
     
     @GetMapping("/userSignIn")
-	public String userSignIn(@PathVariable("userId") long userId, Model model) {
-		User u = userRepo.findById(userId).orElse(null);
-		model.addAttribute(u);
-		return "userHome";
+	public String userSignIn(Model model, @PathVariable("username") String username, @PathVariable("password") String password) {
+		LogIn login = new LogIn(username, password);
+		model.addAttribute("login", login);
+		return "index";
 	}
+    
+    @PostMapping("/userSignIn")
+    public String validateUserSignIn(LogIn login) {
+    	List<User> allUsers = (userRepo.findAll());
+    	
+    	for(User user : allUsers) {
+    		if(login.getUsername().equalsIgnoreCase(user.getUserName()) || login.getUsername().equalsIgnoreCase(user.getEmail())) {
+    			login.setUsernameFound(true);
+    		} else {
+    			login.setUsernameFound(false);
+    		}
+    		
+    		if(login.getPassword().equals(user.getPassword())) {
+    			login.setPasswordFound(true);
+    		}else {
+    			login.setPasswordFound(false);
+    		}
+    	}
+    	
+    	if(!(login.isUsernameFound() && login.isPasswordFound())) {
+    		JOptionPane.showMessageDialog(null, "Registered user with provided username and password not found.");
+    		return "index";
+    	} else if((!login.isUsernameFound()) && login.isPasswordFound()) {
+    		JOptionPane.showMessageDialog(null, "Registered user with provided username not found.");
+    		return "index";
+    	} else if(login.isUsernameFound() && (!login.isPasswordFound())) {
+    		JOptionPane.showMessageDialog(null, "Registered user with provided password not found.");
+    		return "index";
+    	}
+   
+    	JOptionPane.showMessageDialog(null, "Successful Sign-In!");
+    	return "userHome";
+    }
+    
     
     // ----------------------------
  	// --- Registration methods ---
