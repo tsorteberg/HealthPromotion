@@ -78,6 +78,35 @@ public class User {
 		this.password = password;
 	}
 
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
 	// make sure Lombok is imported @NoArgsConstructor already generates this piece of code
 //	public User() {
 //		// TODO Auto-generated constructor stub
