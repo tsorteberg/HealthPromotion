@@ -26,11 +26,21 @@
             <th th:class="dateTime" th:text="${vital.dateTime}"></th>
             <th th:class="action"><a th:href="@{/edit/{id}(id=${vital.id})}">Edit</a></th>
             <th th:class="action"><a th:href="@{/delete/{id}(id=${vital.id})}">Delete</a></th>
+            <!--
+            	Links that work with alternate controllers.
+	            <th th:class="action"><a th:href="@{'/delete/' + ${vital.userId} + '/' + ${vital.userVitalId}}">Delete</a></th>
+	            <th th:class="action"><a th:href="@{'/viewVitals/' + ${vital.userVitalId}}">View</a></th>
+             -->
         </tr>
     </table>
 </form>
 <br/>
 <a href="../addVitals">Add a new vital</a>
 <a href="../viewVitals">View vitals</a>
+<!--
+	Links that work with alternate controllers.
+	<a th:href="@{'/addVitals/' + ${user.userId}}">Add a new vital</a>
+	<a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back:</a>
+-->
 </body>
 </html>

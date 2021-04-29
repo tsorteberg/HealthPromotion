@@ -8,9 +8,19 @@
  */
 package dmacc.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.context.annotation.*;
+
+import dmacc.beans.Vitals;
 
 @Configuration
 public class BeanConfiguration {
+	
+	@Bean
+	public Vitals vitals() {
+		Vitals bean = new Vitals(123, "42", "200", "72", "100", "70", LocalDate.now());
+		return bean;
+	}
 
 }

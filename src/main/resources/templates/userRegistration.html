@@ -1,55 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        h5{
+            color: red;
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
+    <script>
+    'use strict'
+    function checkCredentials(form){
+        
+        function setInvalid(id, message){
+            const text = document.getElementById(id);
+            document.getElementById(id).style.visibility ="visible";
+            text.innerText = message;
+        }
+
+        function setValid(id){
+            document.getElementById(id).style.visibility ="hidden";
+        }
+        
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+        if(form.name.value == ""){
+            setInvalid("name-error", "Name cannot be left blank")
+            form.name.focus();
+            return false;
+        }else{
+            setValid("name-error");
+        }
+
+        if(form.username.value == ""){
+            setInvalid("username-error", "Username cannot be left blank")
+            form.username.focus();
+            return false;
+        }else{
+            setValid("username-error");
+        }
+
+        if(form.email.value == ""){
+            setInvalid("email-error", "Email cannot be left blank")
+            form.email.focus();
+            return false;
+        }else{
+            setValid("email-error");
+        }
+
+        if(form.password.value == ""){
+            setInvalid("password-error", "Password cannot be left blank")
+            form.password.focus();
+            return false;
+        }else{
+            setValid("password-error");
+        }
+        
+        if(form.email.value.match(emailPattern)){
+            setValid("email-error");
+            return true;
+        }else{
+            setInvalid("email-error", "Please enter a valid email")
+            form.email.focus();
+            return false;
+        }
+
+    }
+    </script>
+   
     <div class ="col-md-4 col-md-offset-4">
-        <!-- 
-            To-Do...
-            1. Remove (onsubmit="event.preventDefault();") once other required pages are ready
-            2. Add action attribute
-        -->
-        <form method="POST" onsubmit="event.preventDefault();" >
+        
+        <form id= "userRegistration" name="userRegistration" th:action="@{/registration}" th:object="${newUser}" method="POST"  onsubmit="return checkCredentials(this)">
             <h1>Sign Up</h1>
 
             <div class="form-group">
-                <label for="name">Name</label>
-                <input class="form-control" id="name" name="name" type="text" placeholder="first and last name">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" name="name" type="text" th:field="*{name}"placeholder="first and last name">
+                	<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+                    <h5 id ="name-error">Error message goes here</h5>
             </div>
 
            <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" id="username" name="username" type="text">
+                <input class="form-control" id="username" name="username" th:field="*{userName}" type="text">
+                <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">User name Error</p>
+                <h5 id ="username-error">Error message goes here</h5>
            </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input class="form-control" id="email" name="email" type="text">
+                <input class="form-control" id="email" name="email" type="text" th:field="*{email}">
                 <small id="emailHelp" class="form-text text-muted">Your email will not be shared with anyone else</small>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+                <h5 id ="email-error">Error message goes here</h5>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" id="password" name="password" type="text">
+                
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" name="password" th:field="*{password}" type="password">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                    <h5 id ="password-error">Error message goes here</h5>
             </div>
 
+			<!-- will re-add after validation 
             <div class="form-group">
                 <label for="re-password">Re-enter Password</label>
-                <input class="form-control" id="re-password" name="re-password" type="text">
+                <input class="form-control" id="re-password" name="re-password" th:field="*{password}" type="text">
             </div>
+          	-->
             
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">Create Account</button>
             </div>
         </form>
-
-        <!-- Add Sign-In page to href="#" later once is added to the repository-->
-        <p>Already have an account? <a href="#">Sign-In</a></p>
+        
+        <p>Already have an account? <a href="/">Sign-In</a></p>
     </div>
+    
 </body>
 </html>
