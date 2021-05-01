@@ -6,20 +6,17 @@
 </head>
 <body>
 	<H3>Add New Vital</H3>
-	<!-- 
-		Form element that works with alternate controllers.
-		<form th:object="${newVital}" th:action="@{/postAddVital/{id}(id=${newVital.userId})}" method="POST">
-	 -->
-	<form th:object="${newVital}" th:action="@{/update/{id}(id=${newVital.id})}" method=POST>
-	
+	<form th:object="${newVital}" th:action="@{/postAddVital/{id}(id=${newVital.userId})}" method="POST">
+		<input type="number" name="userId" th:field="*{userId}" readonly>
 		Age: <input name="age" size="10" th:field="*{age}"> <br />
 		Weight: <input name="weight" size="20" th:field="*{weight}"><br />
 		height: <input name="height" size="20" th:field="*{height}"><br />
 		Blood Pressure Systolic: <input name="bloodPressureSystolic" size="10" th:field="*{bloodPressureSystolic}"><br />
 		Blood Pressure Diastolic: <input name="bloodPressureDiastolic" size="10" th:field="*{bloodPressureDiastolic}"><br />
-		Date: <input name="dateTime" size="20" th:field="*{dateTime}"> <br />
+		Date: <input type="date" name="dateTime" size="20" th:field="*{dateTime}"> <br />
 		<br/>
 		<input name="submit" type="submit" value="submit" />
+		<a th:href="@{'/viewAllVitals/' + ${newVital.userId}}" class="btn btn-secondary">Cancel:</a>
 	</form>
 
 </body>

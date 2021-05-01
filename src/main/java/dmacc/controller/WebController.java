@@ -121,44 +121,10 @@ public class WebController {
     	}
     }
 	
-	@GetMapping({"/viewAllVitals"})
-	public String viewAllVitals(Model model) {
-		if (vitalsRepo.findAll().isEmpty()) {
-			return addVitals(model);
-	    }
-	    model.addAttribute("vitals", vitalsRepo.findAll());
-	        return "userHome";
-	   }
-
-	@GetMapping("/addVitals")
-	public String addVitals(Model model) {
-		Vitals v = new Vitals();
-		model.addAttribute("newVital", v);
-		return "addVitals";
-	}
-	
 	@GetMapping("/userHome")
 	public String userHome(Model model) {
 		return "userHome";
 	}
-	@GetMapping("/edit/{id}")
-    public String showUpdateVital( @PathVariable("id") long id, Model model) {
-        Vitals v = vitalsRepo.findById(id).orElse(null);
-        model.addAttribute("newVital", v);
-        return "addVitals";
-    }
-	
-    @PostMapping("/update/{id}")
-    public String updateVitals(Vitals v, Model model) {
-        vitalsRepo.save(v);
-        return viewAllVitals(model);
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteVitals(@PathVariable("id") long id, Model model) {
-        vitalsRepo.findById(id).ifPresent(vitalsRepo :: delete);
-        return viewAllVitals(model);
-    }
     
     // ----------------------------
  	// --- Registration methods ---
@@ -187,9 +153,6 @@ public class WebController {
  		return "sucessfulRegistration";	
  	}
  	
- 	/**
-	 * Example controllers that works with current project structure.
-	 * Simply pass user id from database into url.
 	@GetMapping({"/viewAllVitals/{id}"})
 	public String viewAllVitals(@PathVariable("id") long id, Model model) {
 		User u = userRepo.findById(id).orElse(null);
@@ -228,6 +191,4 @@ public class WebController {
         //return viewAllVitals(uid, model);
         return "redirect:../../viewAllVitals" + "/" + uid;
     }
-    */
-	
 }

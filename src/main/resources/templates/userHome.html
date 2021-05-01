@@ -17,30 +17,20 @@
             <th class="dateTime">Date</th>
             <th class="action" th:colspan="2">Action</th>
         </tr>
-        <tr th:each="vital : ${vitals}">
-            <th th:class="id"     th:text="${vital.id}"></th>
+        <tr th:each="vital : ${user.vitals}">
+            <th th:class="id"     th:text="${vital.userVitalId}"></th>
             <th th:class="height"   th:text="${vital.height}"></th>
             <th th:class="weight" th:text="${vital.weight}"></th>
             <th th:class="bloodPressureSystolic"   th:text="${vital.bloodPressureSystolic}"></th>
             <th th:class="bloodPressureDiastolic"   th:text="${vital.bloodPressureDiastolic}"></th>
             <th th:class="dateTime" th:text="${vital.dateTime}"></th>
-            <th th:class="action"><a th:href="@{/edit/{id}(id=${vital.id})}">Edit</a></th>
-            <th th:class="action"><a th:href="@{/delete/{id}(id=${vital.id})}">Delete</a></th>
-            <!--
-            	Links that work with alternate controllers.
-	            <th th:class="action"><a th:href="@{'/delete/' + ${vital.userId} + '/' + ${vital.userVitalId}}">Delete</a></th>
-	            <th th:class="action"><a th:href="@{'/viewVitals/' + ${vital.userVitalId}}">View</a></th>
-             -->
+            <th th:class="action"><a th:href="@{'/delete/' + ${vital.userId} + '/' + ${vital.userVitalId}}">Delete</a></th>
+            <th th:class="action"><a th:href="@{'/viewVitals/' + ${vital.userVitalId}}">View</a></th>
         </tr>
     </table>
 </form>
 <br/>
-<a href="../addVitals">Add a new vital</a>
-<a href="../viewVitals">View vitals</a>
-<!--
-	Links that work with alternate controllers.
-	<a th:href="@{'/addVitals/' + ${user.userId}}">Add a new vital</a>
-	<a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back:</a>
--->
+<a th:href="@{'/addVitals/' + ${user.userId}}">Add a new vital</a>
+<a th:href="@{'/'}">Logout</a>
 </body>
 </html>
