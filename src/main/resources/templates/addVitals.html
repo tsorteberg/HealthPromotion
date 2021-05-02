@@ -2,22 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <title>Input Vitals</title>
 </head>
-<body>
-	<H3>Add New Vital</H3>
-	<form th:object="${newVital}" th:action="@{/postAddVital/{id}(id=${newVital.userId})}" method="POST">
-		<input type="number" name="userId" th:field="*{userId}" readonly>
-		Age: <input name="age" size="10" th:field="*{age}"> <br />
-		Weight: <input name="weight" size="20" th:field="*{weight}"><br />
-		height: <input name="height" size="20" th:field="*{height}"><br />
-		Blood Pressure Systolic: <input name="bloodPressureSystolic" size="10" th:field="*{bloodPressureSystolic}"><br />
-		Blood Pressure Diastolic: <input name="bloodPressureDiastolic" size="10" th:field="*{bloodPressureDiastolic}"><br />
-		Date: <input type="date" name="dateTime" size="20" th:field="*{dateTime}"> <br />
-		<br/>
-		<input name="submit" type="submit" value="submit" />
-		<a th:href="@{'/viewAllVitals/' + ${newVital.userId}}" class="btn btn-secondary">Cancel:</a>
-	</form>
 
+		<style>
+			.border {
+				text-align:center;
+				margin: auto;
+				border-style:groove;
+				border-radius: 25px;
+				padding: 25px;
+			}
+			
+		
+		</style>
+
+</head>
+
+<body style="margin: 50px">
+<div class="col-md-5 col-md-offset-4 border">
+		<div class="jumbotron">
+	<h1>Add New Vitals</h1>
+	
+			</div>
+	<form th:object="${newVital}" th:action="@{/postAddVital/{id}(id=${newVital.userId})}" method="POST">
+	
+		<div class="form-group">
+		<label for="userId">User ID</label>
+		<input class="form-control" type="number" name="userId" th:field="*{userId}" readonly>
+		</div>
+		<div class="form-group">
+			<label for="password"></label>
+			<input class="form-control" type="text"  name="age" size="10" th:field="*{age}" placeholder="Age"> <br />
+		</div>
+		<div class="form-group">
+			<input class="form-control"  type="text" name="weight" size="20" th:field="*{weight}" placeholder="Weight(lbs)"><br />
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="text" name="height" size="20" th:field="*{height}" placeholder="Height(inches)"><br />
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="text" name="bloodPressureSystolic" size="10" th:field="*{bloodPressureSystolic}" placeholder="Blood Pressure Systolic"><br />
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="text" name="bloodPressureDiastolic" size="10" th:field="*{bloodPressureDiastolic}" placeholder="Blood Pressure Diastolic"><br />
+		</div>
+		<div class="form-group">
+			<input class="form-control"  type="date" name="dateTime" size="20" th:field="*{dateTime}" placeholder="Date"> <br />
+		</div>
+		<br/>
+			<input name="submit" type="submit" class="btn btn-secondary" value="Submit" />
+		<a th:href="@{'/viewAllVitals/' + ${newVital.userId}}" class="btn btn-secondary">Cancel</a>
+	</form>
+</div>
 </body>
+
 </html>
