@@ -14,11 +14,10 @@
 				border-radius: 25px;
 				padding: 25px;
 			}
-		
 		</style>
 	</head>
-	<div class="col-md-4 col-md-offset-4 border">
-		<body style="margin: 25px">
+	<body style="margin: 25px">
+		<div class="col-md-4 col-md-offset-4 border">
 			<div class="jumbotron">
 				<h1>Health Score</h1>
 				<h3 th:text="${vital.dateTime}"></h3>
@@ -28,7 +27,6 @@
 	            <canvas id="demo"></canvas>
 	        </div>
 	        <h2>Health Status: <span th:text="${score.healthStatus}"></span></h2>
-	        
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -44,14 +42,12 @@
 				</tbody>
 			</table>
 			<div style="text-align:left;">
-			<p><strong>Blood Pressure:</strong></p>
-			<p th:utext="${score.bpMessage}"></p>
-			<p><strong>Diet and Exercise Recommendations:</strong></p>
-			<p th:utext="${score.weightMessage}"></p>
-	
-			<a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back to Vitals:</a>
+				<p><strong>Blood Pressure:</strong></p>
+				<p th:utext="${score.bpMessage}"></p>
+				<p><strong>Diet and Exercise Recommendations:</strong></p>
+				<p th:utext="${score.weightMessage}"></p>
+				<a th:href="@{'/viewAllVitals/' + ${vital.userId}}" class="btn btn-secondary">Back to Vitals:</a>
 			</div>
-	        
 	        <div id="preview-textfield"></div>
 	        
 	        <script th:inline="javascript">
@@ -108,6 +104,6 @@
 			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		</body>
-	</div>
+		</div>
+	</body>
 </html>

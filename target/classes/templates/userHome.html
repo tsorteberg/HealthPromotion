@@ -1,64 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-<meta charset="ISO-8859-1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<title>User Homepage</title>
+	<head>
+		<meta charset="ISO-8859-1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title>User Homepage</title>
 
 		<style>
 			.border {
 				text-align:center;
 				margin: auto;
-				border-style:groove;
+				border-style:hidden;
 				border-radius: 25px;
 				padding: 25px;
 			}
-		
 		</style>
 
-</head>
-<div class="col-md-6 col-md-offset-4 border">
-<body style="margin: 50px">
-		<div class="jumbotron">
+	</head>
+	<body>
+		<div class="container border">
+			<div class="jumbotron">
 				<h1>Health Promotion Home</h1>
 				<h3 th:text="${userName}"></h3>
 			</div>
-	<form>
-    <table class="table table-bordered">
-    	<thread>
-     <tr>
-            <th class="id">Id</th>
-            <th class="height">Height</th>
-            <th class="weight">Weight</th>
-            <th class="bloodPressureSystolic">Blood Pressure Systolic</th>
-            <th class="bloodPressureDiastolic">Blood Pressure Diastolic</th>
-            <th class="dateTime">Date</th>
-            <th class="action" th:colspan="2">Action</th>
-        </tr>
-        </thread>
-        <tbody>
-        <tr th:each="vital : ${user.vitals}">
-            <th th:class="id"     th:text="${vital.userVitalId}"></th>
-            <th th:class="height"   th:text="${vital.height}"></th>
-            <th th:class="weight" th:text="${vital.weight}"></th>
-            <th th:class="bloodPressureSystolic"   th:text="${vital.bloodPressureSystolic}"></th>
-            <th th:class="bloodPressureDiastolic"   th:text="${vital.bloodPressureDiastolic}"></th>
-            <th th:class="dateTime" th:text="${vital.dateTime}"></th>
-            <th th:class="action"><a th:href="@{'/delete/' + ${vital.userId} + '/' + ${vital.userVitalId}}" class="btn btn-secondary">Delete</a></th>
-            <th th:class="action"><a th:href="@{'/viewVitals/' + ${vital.userVitalId}}" class="btn btn-secondary">View</a></th>
-        </tr>
-        </tbody>
-    </table>
-</form>
-<br/>
-<a th:href="@{'/addVitals/' + ${user.userId}}">Add a new vital</a>
-<a th:href="@{'/'}">Logout</a>
-</div>
-<div id="preview-textfield"></div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+			<div class="table-responsive">
+    			<table class="table">
+    				<thead>
+     					<tr>
+            				<th class="id">Id</th>
+            				<th class="height">Height</th>
+				            <th class="weight">Weight</th>
+				            <th class="bloodPressureSystolic">Blood Pressure Systolic</th>
+				            <th class="bloodPressureDiastolic">Blood Pressure Diastolic</th>
+				            <th class="dateTime">Date</th>
+				            <th></th>
+				            <th></th>
+        				</tr>
+        			</thead>
+        			<tbody>
+        				<tr th:each="vital : ${user.vitals}">
+				            <th th:class="id"     th:text="${vital.userVitalId}"></th>
+				            <th th:class="height"   th:text="${vital.height}"></th>
+				            <th th:class="weight" th:text="${vital.weight}"></th>
+				            <th th:class="bloodPressureSystolic"   th:text="${vital.bloodPressureSystolic}"></th>
+				            <th th:class="bloodPressureDiastolic"   th:text="${vital.bloodPressureDiastolic}"></th>
+				            <th th:class="dateTime" th:text="${vital.dateTime}"></th>
+				            <th th:class="action">
+				            	<a th:href="@{'/delete/' + ${vital.userId} + '/' + ${vital.userVitalId}}" class="btn btn-secondary">Delete</a>
+				            </th>
+				            <th>
+				            	<a th:href="@{'/viewVitals/' + ${vital.userVitalId}}" class="btn btn-secondary">View</a>
+				            </th>
+        				</tr>
+        			</tbody>
+    			</table>
+    		</div>
+			<br/>
+			<a th:href="@{'/addVitals/' + ${user.userId}}">Add a new vital</a>
+			<a th:href="@{'/'}">Logout</a>
+		</div>
+		<div id="preview-textfield"></div>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
 </html>
